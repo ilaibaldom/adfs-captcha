@@ -1,0 +1,16 @@
+bin/
+obj/
+out/
+dist/
+.vs/
+# Microsoft's AD FS assembly, copied from a server for building only: do not commit/redistribute.
+lib/*.dll
+# Written by Enable-PhotoTagCaptchaForApp.ps1 on the AD FS server.
+phototag-scope-state.json
+
+# Lab: generated secrets and logs
+lab/lab-credentials.json
+lab/logs/
+
+# Strong-name PRIVATE key: keep it out of the repo (store it securely; build needs it at keys\PhotoTagCaptcha.snk).
+keys/*.snk

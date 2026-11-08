@@ -1,0 +1,9 @@
+{
+  "photoUrl": "",
+  "timeoutMs": 3000,
+  "maxBytes": 2097152,
+  "displayMode": "popup",
+  "allowedApplications": [ "https://your-app-group-web-api-identifier/" ],
+  "allowUnidentified": false,
+  "diagnostics": false
+}

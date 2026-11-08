@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Local smoke test + page preview. Not deployed.
+    Drives PhotoTagAdapter the way AD FS does and writes out\preview.html.
+    Targets net8.0 because .NET Framework refuses to load the delay-signed reference stub,
+    while .NET (Core) does not validate strong-name signatures. References the built net472 DLLs,
+    so build.ps1 builds the adapter first.
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <NoWarn>$(NoWarn);MSB3277</NoWarn>
+    <AdapterBin>$(MSBuildThisFileDirectory)..\..\src\PhotoTagCaptcha.Adapter\bin\$(Configuration)\net472\</AdapterBin>
+    <StubBin>$(MSBuildThisFileDirectory)..\..\src\Microsoft.IdentityServer.Web.Stub\bin\$(Configuration)\net472\</StubBin>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Part of .NET Framework (what AD FS runs), but a separate package on .NET 8. -->
+    <PackageReference Include="System.Diagnostics.EventLog" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\src\PhotoTagCaptcha.Adapter\Assets\photo.jpg" Link="photo.jpg" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="PhotoTagCaptcha.Adapter">
+      <HintPath>$(AdapterBin)PhotoTagCaptcha.Adapter.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityServer.Web">
+      <HintPath>$(StubBin)Microsoft.IdentityServer.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>

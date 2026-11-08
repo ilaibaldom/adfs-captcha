@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    COMPILE-TIME REFERENCE STUB ONLY. Never deploy this DLL.
+
+    The real Microsoft.IdentityServer.Web.dll ships only on an AD FS server (C:\Windows\ADFS)
+    and is not on NuGet. This project produces an assembly with the SAME identity
+      Microsoft.IdentityServer.Web, Version=10.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35
+    (delay-signed with Microsoft's *public* key) that declares the external-authentication
+    interfaces, so the adapter compiles with a correct assembly reference. On the AD FS server
+    the CLR binds that reference to the real assembly in the GAC.
+
+    If lib\Microsoft.IdentityServer.Web.dll exists (copied from an AD FS server), the adapter
+    project references it instead and this stub is not used.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>Microsoft.IdentityServer.Web</AssemblyName>
+    <RootNamespace>Microsoft.IdentityServer.Web</RootNamespace>
+    <AssemblyVersion>10.0.0.0</AssemblyVersion>
+    <FileVersion>10.0.0.0</FileVersion>
+    <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\..\keys\ms-31bf3856ad364e35.publickey</AssemblyOriginatorKeyFile>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
+</Project>

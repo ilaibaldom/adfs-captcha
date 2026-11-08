@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net472</TargetFramework>
+    <AssemblyName>PhotoTagCaptcha.Adapter</AssemblyName>
+    <RootNamespace>PhotoTagCaptcha</RootNamespace>
+    <!-- Keep AssemblyVersion stable: the AD FS registration stores the full type name incl. version.
+         Bump it only together with an Unregister/Register of the provider. -->
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <!-- FileVersion tracks builds (logged at pipeline load); it does not affect the registration. -->
+    <FileVersion>1.1.0.0</FileVersion>
+    <Version>1.1.0</Version>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <!-- AD FS loads external adapters from the GAC, which requires a strong name. -->
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)..\..\keys\PhotoTagCaptcha.snk</AssemblyOriginatorKeyFile>
+    <AdfsWebDll>$(MSBuildThisFileDirectory)..\..\lib\Microsoft.IdentityServer.Web.dll</AdfsWebDll>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+    <EmbeddedResource Include="Assets\photo.jpg" LogicalName="PhotoTagCaptcha.Assets.photo.jpg" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+
+  <!-- Prefer the real AD FS assembly when it has been copied into lib\; otherwise use the stub. -->
+  <ItemGroup Condition="Exists('$(AdfsWebDll)')">
+    <Reference Include="Microsoft.IdentityServer.Web">
+      <HintPath>$(AdfsWebDll)</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup Condition="!Exists('$(AdfsWebDll)')">
+    <ProjectReference Include="..\Microsoft.IdentityServer.Web.Stub\Microsoft.IdentityServer.Web.Stub.csproj" Private="false" />
+  </ItemGroup>
+
+</Project>
