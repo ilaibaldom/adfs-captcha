@@ -34,8 +34,10 @@ User --> App --> AD FS primary auth (forms / WIA)
 | `src/Microsoft.IdentityServer.Web.Stub/` | Compile-time-only stand-in for the AD FS assembly. **Never deploy.** |
 | `tools/PreviewHarness/` | Local smoke tests; drives the adapter like AD FS does and writes `out/preview.html`. |
 | `deploy/` | AD FS PowerShell: install, configure, scope to one app, report scope, roll back, uninstall. |
-| `keys/` | `PhotoTagCaptcha.snk` (adapter signing key, **keep it**) and Microsoft's public key for the stub. |
+| `keys/` | `PhotoTagCaptcha.snk` (adapter signing key, **keep it**; not in git, restore it before building a clone) and Microsoft's public key for the stub. |
 | `build.ps1` | Build, verify, test, stage everything into `dist/`. |
+| `docs/` | [How to work](docs/WORKFLOW.md), [runbook](docs/RUNBOOK.md) ("I need to..."), [troubleshooting](docs/TROUBLESHOOTING.md). |
+| `CLAUDE.md`, `.claude/agents/` | Rules and sub-agents for working on this repo with Claude Code. |
 
 ## Build (dev machine)
 
@@ -54,7 +56,7 @@ This will:
 3. If `lib\Microsoft.IdentityServer.Web.dll` is present, compile against it and compare the stub
    with it interface by interface (`tools\Compare-AdfsStub.ps1`). The build fails on any
    difference.
-4. Run 15 smoke tests and write `out/preview.html`.
+4. Run the smoke tests and write `out/preview.html`.
 5. Stage the DLL and scripts into `dist/`.
 
 ### About the reference stub
